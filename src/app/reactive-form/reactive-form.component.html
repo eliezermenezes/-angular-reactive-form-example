@@ -1,0 +1,115 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row g-3">
+        <div class="col-sm-12">
+            <label for="firstName" class="form-label">Nome</label>
+            <input type="text" class="form-control" formControlName="name">
+            <app-invalid-feedback [control]="form.get('name')"></app-invalid-feedback>
+        </div>
+
+        <div class="col-sm-12">
+            <label for="lastName" class="form-label">E-mail</label>
+            <input type="text" class="form-control" formControlName="email">
+            <app-invalid-feedback [control]="form.get('email')"></app-invalid-feedback>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <h4 class="mb-3">Endereço</h4>
+
+    <ng-container formGroupName="address">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label for="cep" class="form-label">Cep</label>
+                <input type="text" id="cep" class="form-control" formControlName="cep">
+                <app-invalid-feedback [control]="form.get('address.cep')"></app-invalid-feedback>
+            </div>
+
+            <div class="col-4">
+                <label for="street" class="form-label">Rua</label>
+                <input type="text" id="street" class="form-control" formControlName="street">
+                <app-invalid-feedback [control]="form.get('address.street')"></app-invalid-feedback>
+            </div>
+
+            <div class="col-3">
+                <label for="city" class="form-label">Cidade</label>
+                <input type="text" id="city" class="form-control" formControlName="city">
+                <app-invalid-feedback [control]="form.get('address.city')"></app-invalid-feedback>
+            </div>
+
+            <div class="col-12">
+                <label for="district" class="form-label">Bairro</label>
+                <input type="text" id="district" class="form-control" formControlName="district">
+                <app-invalid-feedback [control]="form.get('address.district')"></app-invalid-feedback>
+            </div>
+
+            <div class="col-md-4">
+                <label for="state" class="form-label">State</label>
+                <select class="form-select" id="state" formControlName="state">
+                    <option *ngFor="let state of statesBr$ | async" [value]="state.sigla">{{ state.nome }}</option>
+                    <option>California</option>
+                </select>
+                <app-invalid-feedback [control]="form.get('address.state')"></app-invalid-feedback>
+            </div>
+        </div>
+    </ng-container>
+
+    <hr class="my-4">
+    <h4 class="mb-3">Tecnologias favoritas</h4>
+
+    <div class="my-3" formArrayName="technologies">
+        <div class="form-check" *ngFor="let technology of technologies; let i = index">
+            <input type="checkbox" class="form-check-input" [formControlName]="i">
+            <label class="form-check-label">{{ technology }}</label>
+        </div>
+        <app-invalid-feedback [control]="form.get('technologies')"></app-invalid-feedback>
+    </div>
+
+    <hr class="my-4">
+    <div class="d-flex justify-content-start align-items-start">
+        <h4 class="mb-3">Contatos</h4>
+        <button type="button" class="btn btn-primary btn-sm mx-3" (click)="addContact()">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+    </div>
+
+    <div class="row gy-3" formArrayName="contacts">
+        <div class="col-sm-6" *ngFor="let control of contactGroup.controls; let i = index">
+            <div class="card" [formGroupName]="i">
+                <div class="card-body g-3">
+
+                    <h5 class="card-title mb-3">Contato {{ i + 1 }}</h5>
+
+                    <div class="row g-2">
+                        <div class="col-sm-12 col-lg-5">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" placeholder="Name" formControlName="name">
+                                <label>Nome</label>
+                            </div>
+                            <app-invalid-feedback [control]="control.get('name')"></app-invalid-feedback>
+                        </div>
+                        <div class="col-sm-12 col-lg-5">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" placeholder="Telefone" formControlName="phone">
+                                <label>Telefone</label>
+                            </div>
+                            <app-invalid-feedback [control]="control.get('phone')"></app-invalid-feedback>
+                        </div>
+                        <div class="col-2 text-center">
+                            <button type="button" class="btn btn-danger mt-2" (click)="removeContact(i)">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <app-form-debug [form]="form"></app-form-debug>
+
+    <div class="d-flex justify-content-center">
+        <button type="button" class="w-25 btn btn-secondary btn-lg mx-4">Limpar</button>
+        <button type="submit" class="w-25 btn btn-primary btn-lg">Salvar</button>
+    </div>
+</form>
