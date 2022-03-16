@@ -1,4 +1,4 @@
-import { FormArray, FormControl } from "@angular/forms";
+import { FormArray, FormControl } from '@angular/forms';
 
 declare type CustomValidator = { [key: string]: any } | null;
 
@@ -16,10 +16,10 @@ export class CustomValidators {
 
     static requiredMinCheckbox(min = 1): CustomValidator {
         return (formArray: FormArray) => {
-            const totalCheched = formArray.controls
+            const totalChecked = formArray.controls
                 .map(control => control.value)
                 .reduce((previousValue, currentValue) => currentValue ? previousValue + currentValue : previousValue, 0);
-            return totalCheched >= min ? null : { requiredMin: true };
+            return totalChecked >= min ? null : { requiredMin: true };
         };
     }
 }

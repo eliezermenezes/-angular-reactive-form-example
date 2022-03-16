@@ -1,13 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row g-3">
         <div class="col-sm-12">
-            <label for="firstName" class="form-label">Nome</label>
+            <label class="form-label">Nome</label>
             <input type="text" class="form-control" formControlName="name">
             <app-invalid-feedback [control]="form.get('name')"></app-invalid-feedback>
         </div>
 
         <div class="col-sm-12">
-            <label for="lastName" class="form-label">E-mail</label>
+            <label class="form-label">E-mail</label>
             <input type="text" class="form-control" formControlName="email">
             <app-invalid-feedback [control]="form.get('email')"></app-invalid-feedback>
         </div>
@@ -43,10 +43,9 @@
             </div>
 
             <div class="col-md-4">
-                <label for="state" class="form-label">State</label>
+                <label for="state" class="form-label">Estado</label>
                 <select class="form-select" id="state" formControlName="state">
                     <option *ngFor="let state of statesBr$ | async" [value]="state.sigla">{{ state.nome }}</option>
-                    <option>California</option>
                 </select>
                 <app-invalid-feedback [control]="form.get('address.state')"></app-invalid-feedback>
             </div>

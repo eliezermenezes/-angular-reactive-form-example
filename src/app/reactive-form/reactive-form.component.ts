@@ -69,7 +69,7 @@ export class ReactiveFormComponent implements OnInit {
     }
 
     get contactGroup(): FormArray {
-        return <FormArray>this.form.get('contacts');
+        return this.form.get('contacts') as FormArray;
     }
 
     onSubmit(): void {
@@ -78,8 +78,8 @@ export class ReactiveFormComponent implements OnInit {
             const value = { ...this.form.value };
             // obter os nomes das tecnologias
             value.technologies = value.technologies
-                .map((value: boolean, index: number) => value ? this.technologies[index] : null)
-                .filter((value: string) => value !== null);
+                .map((item: boolean, index: number) => item ? this.technologies[index] : null)
+                .filter((item: string) => item !== null);
 
             console.log(value);
         } else {
@@ -132,7 +132,7 @@ export class ReactiveFormComponent implements OnInit {
         // this.form.get('address.city').disable();
         // this.form.get('address.state').disable();
 
-        const formGroup = <FormGroup>this.form.get('address');
+        const formGroup = this.form.get('address') as FormGroup;
         Object.keys(formGroup.controls)
             .filter(control => control !== 'cep')
             .forEach(control => formGroup.get(control).disable({ onlySelf: true }));
